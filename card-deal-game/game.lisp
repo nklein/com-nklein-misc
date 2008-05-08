@@ -1,0 +1,27 @@
+(in-package :card-deal-game)
+
+(defun count-all-loops (cards players)
+    (declare (ignore cards players)))
+
+(defun next-position (state dealer)
+    (let* ((new     (copy-seq state))
+	   (len      (length state))
+	   (to-deal  (elt state dealer))
+	   (for-each (floor (/ to-deal len)))
+	   (left     (- to-deal (* for-each len))))
+	(setf (elt new dealer) 0)
+	(dotimes (ii len)
+	    (incf (elt new ii) for-each))
+	(dotimes (ii left)
+	    (incf (elt new (mod (+ dealer ii 1) len))))
+	(values new (mod (+ dealer left) len))))
+
+(defun length-of-loop (start)
+    (labels ((rec (start start-dealer cur dealer cntr)
+		(if (and (equalp start cur) (eql start-dealer dealer))
+		    cntr
+		    (multiple-value-bind (cur dealer)
+				(next-position (or cur start) dealer)
+			(format t "~A: ~A~%" dealer cur)
+			(rec start start-dealer cur dealer (1+ cntr))))))
+	(rec start 0 nil 0 0)))
