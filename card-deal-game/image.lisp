@@ -29,7 +29,7 @@
 (defun make-picture (cards)
     (let (rows)
         (dotimes (ii cards (sort (remove-duplicates rows :test #'equalp-rows)
-                                 (sequence-comparator #'> #'=)))
+                                 (sequence-lessp #'> #'=)))
             (push (get-picture-row (v 'integer (- cards ii) ii)) rows))))
 
 (defun color-of (val)
