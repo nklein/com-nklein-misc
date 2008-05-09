@@ -1,0 +1,3 @@
+[submodule "wake-vortex"]
+	path = wake-vortex
+	url = ssh://sirrobin/~/share/git/lisp/wake-vortex.git
